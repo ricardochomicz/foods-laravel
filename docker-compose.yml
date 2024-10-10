@@ -45,7 +45,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: foodslaravel
+      MYSQL_DATABASE: foods_laravel
       MYSQL_ROOT_PASSWORD: root
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
