@@ -7,5 +7,26 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Plano</th>
+                <th>Preço</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($plans as $plan)
+                <tr>
+                    <td>{{ $plan->name }}</td>
+                    <td>{{ $plan->price }}</td>
+                    <td>{{ $plan->description }}</td>
+                    <td>
+                        {{-- <a href="{{ route('admin.plans.show', $plan->id) }}" class="btn btn-primary">Detalhes</a> --}}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 @stop

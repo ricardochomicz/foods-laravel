@@ -15,9 +15,28 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        $plans = array(
+            [
+                'name' => 'Free',
+                'price' => 0.00
+            ],
+            [
+                'name' => 'Business',
+                'price' => 99.90
+            ],
+            [
+                'name' => 'Premium',
+                'price' => 199.90
+            ]
+        );
+
+        foreach ($plans as $plan) {
+            \App\Models\Plan::create($plan);
+        }
     }
 }
