@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: php:fpm
     container_name: application
     restart: unless-stopped
     tty: true
