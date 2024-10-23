@@ -1,12 +1,9 @@
 FROM php:8.2-fpm
 
-# Copy composer.lock and composer.json
-COPY composer.lock composer.json /var/www/foods-laravel/
-
-# Instalar dependências do Laravel
+# Definir diretório de trabalho
 WORKDIR /var/www/foods-laravel
 
-# Instalar a extensão zip
+# Instalar dependências do sistema e extensões do PHP
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -14,38 +11,36 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    nodejs \
+    npm \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd sockets \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Instalar Node.js e npm
-RUN apt-get update && \
-    apt-get install -y nodejs npm
-
-# Instalar a extensão PDO MySQL e o cliente MySQL
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd sockets
-
-# Configurar o VirtualHost do Apache
-#COPY vhost.conf /etc/apache2/sites-available/000-default.conf
-
-# Instalar Composer
+# Instalar Composer globalmente
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+# Copiar composer.lock e composer.json
+COPY composer.lock composer.json /var/www/foods-laravel/
 
-#COPY . .
+# Instalar dependências do Composer sem executar scripts
+RUN composer install --ignore-platform-reqs --no-scripts --no-autoloader
+
+# Copiar o restante da aplicação para o container
 COPY . /var/www/foods-laravel
 
-#Copy existing application directory permissions
-COPY --chown=www:www . /var/www/foods-laravel
+# Ajustar permissões para o diretório de trabalho
+RUN chown -R www-data:www-data /var/www/foods-laravel \
+    && chmod -R 755 /var/www/foods-laravel
 
-# Change current user to www
-USER www
+# Instalar dependências do Composer completas
+RUN composer dump-autoload
 
-# Expose port 9000 and start php-fpm server
+# Expor a porta 9000
 EXPOSE 9000
 
+# Definir usuário para rodar o processo
+USER www-data
+
+# Comando para rodar o PHP-FPM
 CMD ["php-fpm"]
