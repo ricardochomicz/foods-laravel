@@ -1,6 +1,6 @@
 <div class="card border-left-primary">
     <div class="card-header">
-        <h6 class="m-0 font-weight-bold text-primary">
+        <h6 class="m-0">
             {{ Route::currentRouteNamed('plans.create') ? __('Novo Plano') : __('Editar Plano') }}
         </h6>
     </div>
