@@ -79,6 +79,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/regular.min.css"
         integrity="sha512-OKH13TyZ18LePsilKonIMK0Q+udMFo4fH1BcCeNWwJEY/cuebYdydxSo0/rohwsMxVxPlaDS+CGw3Y7Xo/7ckg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 
 </head>
 
