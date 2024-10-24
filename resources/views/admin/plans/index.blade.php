@@ -9,24 +9,26 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <table class="table table-borderlles">
+            <table class="table table-borderless table-hover">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Plano</th>
                         <th>Preço</th>
                         <th>Descrição</th>
-                        <th>Ações</th>
+                        <th class="text-center">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($plans as $plan)
                         <tr>
+                            <td>{{ $plan->id }}</td>
                             <td>{{ $plan->name }}</td>
                             <td>{{ moneyFormat($plan->price) }}</td>
                             <td>{{ $plan->description }}</td>
-                            <td>
-
-                                {{-- <a href="{{ route('admin.plans.show', $plan->id) }}" class="btn btn-primary">Detalhes</a> --}}
+                            <td class="text-center">
+                                <a href="{{ route('plans.edit', $plan->id) }}" class="btn btn-sm btn-primary"><i
+                                        class="fas fa-edit"></i></a>
                             </td>
                         </tr>
                     @endforeach
