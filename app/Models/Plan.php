@@ -15,4 +15,11 @@ class Plan extends Model
         'slug',
         'description',
     ];
+
+    public function scopeFilter($query, array $filters): void
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        });
+    }
 }

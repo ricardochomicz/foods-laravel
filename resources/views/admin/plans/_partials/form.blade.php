@@ -23,11 +23,20 @@
                 <label for="price">Valor</label>
                 <input type="text" name="price" class="form-control @error('price') is-invalid @enderror"
                     value="{{ old('price', @$plan->price) }}">
-                @error('name')
+                @error('price')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="description">Descrição</label>
+                <textarea name="description" id="description" class="form-control">
+                    {{ old('description', @$plan->description) }}
+                </textarea>
+
             </div>
         </div>
 
